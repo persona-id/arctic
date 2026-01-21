@@ -1,0 +1,37 @@
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
+
+# rspec failure tracking
+.rspec_status
+
+# C extension build artifacts
+*.bundle
+*.so
+*.o
+*.a
+*.log
+*.dSYM
+mkmf.log
+Makefile
+*.gem
+
+# Compiled extension
+/lib/arctic/arctic.bundle
+/lib/arctic/arctic.so
+/ext/arctic/*.o
+/ext/arctic/Makefile
+/ext/arctic/mkmf.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store

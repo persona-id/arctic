@@ -1,0 +1,111 @@
+# TypeProf 0.21.11
+
+# Arctic provides a read-only, memory-efficient interface to environment variables.
+#
+# All returned strings are frozen and deduplicated using Ruby's fstring table,
+# dramatically reducing memory usage when environment variables are accessed multiple times.
+module Arctic
+  # The version of the Arctic gem
+  VERSION: String
+
+  # Retrieves the value of the environment variable +key+.
+  #
+  # Returns a frozen, deduplicated string. If the environment variable does not exist, returns nil.
+  #
+  # @param key [String] The environment variable name
+  # @return [String, nil] The frozen string value of the environment variable, or nil if not found
+  def self.[]: (String key) -> String?
+
+  # Retrieves the environment variable +key+.
+  #
+  # If the key exists, returns its frozen, deduplicated value.
+  # If the key does not exist:
+  # - With a block: yields the key to the block and returns the block's result
+  # - With a default argument: returns the default value
+  # - Without either: raises KeyError
+  #
+  # @param key [String] The environment variable name
+  # @return [String] The environment variable value
+  # @raise [KeyError] If the key is not found and no default or block is provided
+  def self.fetch: (String key) -> String
+                | [T] (String key, T default) -> (String | T)
+                | [T] (String key) { (String) -> T } -> (String | T)
+
+  # Returns true if the environment variable +key+ exists, false otherwise.
+  #
+  # @param key [String] The environment variable name
+  # @return [bool] true if the key exists, false otherwise
+  def self.key?: (String key) -> bool
+
+  # Alias for key?
+  alias self.has_key? self.key?
+
+  # Alias for key?
+  alias self.include? self.key?
+
+  # Alias for key?
+  alias self.member? self.key?
+
+  # Iterates over all environment variables.
+  #
+  # When called with a block, yields each environment variable as a [key, value]
+  # pair where both key and value are frozen, deduplicated strings. Returns Arctic.
+  #
+  # When called without a block, returns an Enumerator.
+  #
+  # @return [Arctic, Enumerator] Arctic module (when block given) or Enumerator (when no block)
+  # @yield [key, value] Gives each environment variable name and value
+  def self.each: () { (String key, String value) -> void } -> self
+               | () -> Enumerator[[String, String], self]
+
+  # Alias for each
+  #
+  # @return [Arctic, Enumerator] Arctic module (when block given) or Enumerator (when no block)
+  # @yield [key, value] Gives each environment variable name and value
+  def self.each_pair: () { (String key, String value) -> void } -> self
+                    | () -> Enumerator[[String, String], self]
+
+  # Returns an array containing all environment variable names.
+  #
+  # Each key is a frozen, deduplicated string for memory efficiency.
+  #
+  # @return [Array<String>] An Array of frozen String keys
+  def self.keys: () -> Array[String]
+
+  # Returns an array containing all environment variable values.
+  #
+  # Each value is a frozen, deduplicated string for memory efficiency.
+  #
+  # @return [Array<String>] An Array of frozen String values
+  def self.values: () -> Array[String]
+
+  # Returns a Hash containing all environment variables.
+  #
+  # Both keys and values are frozen, deduplicated strings for memory efficiency.
+  #
+  # @return [Hash<String, String>] A Hash mapping environment variable names to their values
+  def self.to_h: () -> Hash[String, String]
+
+  # Alias for to_h
+  #
+  # @return [Hash<String, String>] A Hash mapping environment variable names to their values
+  alias self.to_hash self.to_h
+
+  # Returns true if the environment contains no variables, false otherwise.
+  #
+  # @return [bool] true if environment is empty, false otherwise
+  def self.empty?: () -> bool
+
+  # Returns the number of environment variables.
+  #
+  # @return [Integer] The count of environment variables
+  def self.size: () -> Integer
+
+  # Alias for size
+  alias self.length self.size
+
+  # Returns a string representation of the Arctic module.
+  #
+  # @return [String] A String containing the inspection representation
+  def self.inspect: () -> String
+end
